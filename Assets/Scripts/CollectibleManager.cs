@@ -14,14 +14,18 @@ public class CollectibleManager : MonoBehaviour
         else
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
-            StartCoroutine(moveCollectables());
+            DontDestroyOnLoad(gameObject); 
         }
     }
 
     // CollectibleManager part 
     
     List<ICollectable> collectables = new List<ICollectable>();
+
+    public void Start()
+    {
+        StartCoroutine(moveCollectables());
+    }
 
     public void Add(ICollectable item)
     {
