@@ -38,6 +38,8 @@ public class ScoreManager : MonoBehaviour
 
     public bool GameActive = true;
 
+    public int MaxItems = 5;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -90,9 +92,9 @@ public class ScoreManager : MonoBehaviour
 
 
 
-        if (circleScore < circlesLeft - 5 
-            || triangleScore < trianglesLeft - 5 
-            || squareScore < squaresLeft - 5)
+        if (circleScore < circlesLeft - MaxItems 
+            || triangleScore < trianglesLeft - MaxItems 
+            || squareScore < squaresLeft - MaxItems)
         {
             gameOver.gameObject.SetActive(true);
             GameActive = false;
