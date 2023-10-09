@@ -24,9 +24,8 @@ public class ScoreManager : MonoBehaviour
     public TextMeshProUGUI inGameCircles;
     public TextMeshProUGUI inGameTriangles;
     public TextMeshProUGUI inGameSquares;
-    public TextMeshProUGUI collectedCircles;
-    public TextMeshProUGUI collectedTriangles;
-    public TextMeshProUGUI collectedSquares;
+    public TextMeshProUGUI score;
+
     public TextMeshProUGUI gameOver;
 
     private int circleScore = 0;
@@ -59,6 +58,15 @@ public class ScoreManager : MonoBehaviour
             case Type.Square:
                 squareScore++;
                 break;
+            case Type.Hexagon:
+                if ((item as IChangableColor).GetColor() == Color.red)
+                {
+                    MaxItems--;
+                } else
+                {
+                    MaxItems++;
+                }
+                break;
         }
         UpdateScore();
     }
@@ -82,19 +90,15 @@ public class ScoreManager : MonoBehaviour
 
     private void UpdateScore()
     {
-        inGameCircles.text = $"Circles: {circlesLeft}";
-        inGameTriangles.text = $"Triangles: {trianglesLeft}";
-        inGameSquares.text = $"Squares: {squaresLeft}";
+        inGameCircles.text = $"Circles: {circlesLeft}/{MaxItems}";
+        inGameTriangles.text = $"Triangles: {trianglesLeft}/{MaxItems}";
+        inGameSquares.text = $"Squares: {squaresLeft}/{MaxItems}";
 
-        collectedCircles.text = $"Circles: {circleScore}";
-        collectedTriangles.text = $"Triangles: {triangleScore}";
-        collectedSquares.text = $"Squares: {squareScore}";
+        score.text = $"Score: {circleScore + triangleScore + squareScore}";
 
-
-
-        if (circleScore < circlesLeft - MaxItems 
-            || triangleScore < trianglesLeft - MaxItems 
-            || squareScore < squaresLeft - MaxItems)
+        if (circlesLeft > MaxItems 
+            || trianglesLeft > MaxItems 
+            || squaresLeft > MaxItems)
         {
             gameOver.gameObject.SetActive(true);
             GameActive = false;

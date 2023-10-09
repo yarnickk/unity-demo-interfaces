@@ -7,6 +7,7 @@ public enum Type
     Circle,
     Triangle,
     Square,
+    Hexagon,
 }
 
 public interface ICollectable

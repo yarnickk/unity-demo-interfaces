@@ -7,6 +7,7 @@ public class ObjectSpwner : MonoBehaviour
     public GameObject circle;
     public GameObject triangle;
     public GameObject square;
+    public GameObject hexagon;
 
     public float spawnTime;
 
@@ -21,7 +22,7 @@ public class ObjectSpwner : MonoBehaviour
         while(ScoreManager.instance.GameActive)
         {
             yield return new WaitForSeconds(spawnTime);
-            int randNum = Random.Range(0, 3);
+            int randNum = Random.Range(0, 4);
 
             ICollectable collectable;
             switch (randNum)
@@ -36,10 +37,17 @@ public class ObjectSpwner : MonoBehaviour
                     _t.transform.position = new Vector3(Random.Range(-9.0f, 9.0f), Random.Range(-4.0f, 4.0f), 0);
                     collectable = _t.GetComponent<TriangleScript>();
                     break;
+                case 2:
+                    var _h = Instantiate(hexagon);
+                    _h.transform.position = new Vector3(Random.Range(-9.0f, 9.0f), Random.Range(-4.0f, 4.0f), 0);
+                    collectable = _h.GetComponent<HexagonScript>();
+                    ColorManager.instance.Add(collectable as IChangableColor);
+                    break;
                 default:
                     var _s = Instantiate(square);
                     _s.transform.position = new Vector3(Random.Range(-9.0f, 9.0f), Random.Range(-4.0f, 4.0f), 0);
                     collectable = _s.GetComponent<SquareScript>();
+                    
                     break;
             }
             CollectibleManager.instance.Add(collectable);
